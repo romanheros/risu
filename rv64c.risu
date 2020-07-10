@@ -1,0 +1,97 @@
+# Input file for risugen defining RISC-V instructions
+.mode riscv.rv64c
+
+@RV64C
+
+# we borrow X11 to store stack register
+C_LWSP RISCV 010 imm5:1 rd:5 imm2:3 imm6:2 10 \
+!constraints { greg($rd) && $rd != 0 && $rd != 11; } \
+!memory { align(4); stack_plus_imm($imm5 * 32 + $imm2 * 4 + $imm6 * 64, $rd); }
+
+C_LDSP RISCV 011 imm5:1 rd:5 imm3:2 imm6:3 10 \
+!constraints { greg($rd) && $rd != 0 && $rd != 11; } \
+!memory { align(8); stack_plus_imm($imm5 * 32 + $imm3 * 8 + $imm6 * 64, $rd); }
+
+C_FLDSP RISCV 001 imm5:1 rd:5 imm3:2 imm6:3 10 \
+!memory { align(8); stack_plus_imm($imm5 * 32 + $imm3 * 8 + $imm6 * 64); }
+
+C_SWSP RISCV 110 imm2:4 imm6:2 rs2:5 10 \
+!constraints { greg($rs2) && $rs2 != 11; } \
+!memory { align(4); stack_plus_imm($imm2 * 4 + $imm6 * 64); }
+
+C_SDSP RISCV 111 imm3:3 imm6:3 rs2:5 10 \
+!constraints { greg($rs2) && $rs2 != 11; } \
+!memory { align(8); stack_plus_imm($imm3 * 8 + $imm6 * 64); }
+
+C_FSDSP RISCV 101 imm3:3 imm6:3 rs2:5 10 \
+!memory { align(8); stack_plus_imm($imm3 * 8 + $imm6 * 64); }
+
+# encode x11 into 0b011 in CL format
+C_LW RISCV 010 imm3:3 rs1:3 imm2:1 imm6:1 rd:3 00 \
+!memory { align(4); reg_plus_imm($rs1 + 8, $imm2 * 4 + $imm3 * 8 + $imm6 * 64, $rd + 8); }
+
+C_LD RISCV 011 imm3:3 rs1:3 imm6:2 rd:3 00 \
+!memory { align(8); reg_plus_imm($rs1 + 8, $imm3 * 8 + $imm6 * 64, $rd + 8); }
+
+C_FLD RISCV 001 imm3:3 rs1:3 imm6:2 rd:3 00 \
+!memory { align(8); reg_plus_imm($rs1 + 8, $imm3 * 8 + $imm6 * 64); }
+
+C_SW RISCV 110 imm3:3 rs1:3 imm2:1 imm6:1 rs2:3 00 \
+!constraints { $rs2 != $rs1; } \
+!memory { align(4); reg_plus_imm($rs1 + 8, $imm2 * 4 + $imm3 * 8 + $imm6 * 64); }
+
+C_SD RISCV 111 imm3:3 rs1:3 imm6:2 rs2:3 00 \
+!constraints { $rs2 != $rs1; } \
+!memory { align(8); reg_plus_imm($rs1 + 8, $imm3 * 8 + $imm6 * 64); }
+
+C_FSD RISCV 101 imm3:3 rs1:3 imm6:2 rs2:3 00 \
+!memory { align(8); reg_plus_imm($rs1 + 8, $imm3 * 8 + $imm6 * 64); }
+
+C_LI RISCV 010 imm5:1 rd:5 imm:5 01 \
+!constraints { gbase($rd); }
+
+C_LUI RISCV 011 imm17:1 rd:5 imm12:5 01 \
+!constraints { gbase($rd) && ($imm17 != 0 || $imm12 != 0); }
+
+C_ADDI RISCV 000 imm5:1 rd:5 imm:5 01 \
+!constraints { gbase($rd) && ($imm5 != 0 || $imm != 0); }
+
+C_ADDIW RISCV 001 imm5:1 rd:5 imm:5 01 \
+!constraints { gbase($rd); }
+
+# Todo C_ADDI16SP, as it need stack as destination
+# Move sp to aother register through the memory address function.
+
+# C_ADDI4SPN RISCV 000 imm4:2 imm6:4 imm2:1 imm3:1 rd:3 00 \
+# !constraints { $imm4 != 0 || $imm6 != 0 || $imm2 != 0 || $imm3 != 0; }
+
+C_SLLI RISCV 000 shamt5:1 rd:5 shamt:5 10 \
+!constraints { gbase($rd) && ($shamt5 != 0 || $shamt != 0); }
+
+C_SRLI RISCV 100 shamt5:1 00 rd:3 shamt:5 01 \
+!constraints { ($shamt5 != 0 || $shamt != 0); }
+
+C_SRAI RISCV 100 shamt5:1 01 rd:3 shamt:5 01 \
+!constraints { ($shamt5 != 0 || $shamt != 0); }
+
+C_ANDI RISCV 100 imm5:1 10 rd:3 imm:5 01
+
+C_MV RISCV 100 0 rd:5 rs2:5 10 \
+!constraints { gbase($rd) && gbase($rs2); }
+
+C_ADD RISCV 100 1 rd:5 rs2:5 10 \
+!constraints { gbase($rd) && gbase($rs2); }
+
+C_AND RISCV 100 0 11 rd:3 11 rs2:3 01
+
+C_OR RISCV 100 0 11 rd:3 10 rs2:3 01
+
+C_XOR RISCV 100 0 11 rd:3 01 rs2:3 01
+
+C_SUB RISCV 100 0 11 rd:3 01 rs2:3 01
+
+C_SUBW RISCV 100 1 11 rd:3 00 rs2:3 01
+
+C_ADDW RISCV 100 1 11 rd:3 01 rs2:3 01
+
+C_NOP RISCV 0000000000000001
