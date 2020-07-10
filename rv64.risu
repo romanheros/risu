@@ -364,3 +364,103 @@ FCVT_S_L RISCV 1101000 00010 rs1:5 rm:3 rd:5 1010011 \
 
 FCVT_S_LU RISCV 1101000 00011 rs1:5 rm:3 rd:5 1010011 \
 !constraints { greg($rs1) && gfp32($rd) && grm($rm); }
+
+@RV64D
+
+FLD RISCV imm:12 rs1:5 011 rd:5 0000111 \
+!constraints { gbase($rs1) && gfp64($rd); } \
+!memory { align(8); reg_plus_imm($rs1, sextract($imm, 12)); }
+
+FSD RISCV imm5:7 rs2:5 rs1:5 010 imm:5 0100111 \
+!constraints { gbase($rs1) && gfp64($rs2); } \
+!memory { align(8); reg_plus_imm($rs1, sextract($imm5 << 5 | $imm, 12)); }
+
+FMADD_D RISCV rs3:5 01 rs2:5 rs1:5 rm:3 rd:5 1000011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FMSUB_D RISCV rs3:5 01 rs2:5 rs1:5 rm:3 rd:5 1000111 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FNMSUB_D RISCV rs3:5 01 rs2:5 rs1:5 rm:3 rd:5 1001011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FNMADD_D RISCV rs3:5 01 rs2:5 rs1:5 rm:3 rd:5 1001111 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FADD_D RISCV 0000001 rs2:5 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FSUB_D RISCV 0000101 rs2:5 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FMUL_D RISCV 0001001 rs2:5 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FDIV_D RISCV 0001101 rs2:5 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd) && grm($rm); }
+
+FSQRT_D RISCV 0101101 00000  rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rd) && grm($rm); }
+
+FSGNJ_D RISCV 0010001 rs2:5  rs1:5 000 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd); }
+
+FSGNJN_D RISCV 0010001 rs2:5  rs1:5 001 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd); }
+
+FSGNJX_D RISCV 0010001 rs2:5  rs1:5 010 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd); }
+
+FMIN_D RISCV 0010101 rs2:5  rs1:5 000 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd); }
+
+FMAX_D RISCV 0010101 rs2:5  rs1:5 001 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rs2) && gfp64($rd); }
+
+FCVT_S_D RISCV 0100000 00001 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rd) && grm($rm); }
+
+FCVT_D_S RISCV 0100001 00000 rs1:5 rm:3 rd:5 1010011 \
+!constraints { gfp64($rs1) && gfp64($rd) && grm($rm); }
+
+FEQ_D RISCV 1010001 rs2:5 rs1:5 010 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && gfp64($rs1); }
+
+FLT_D RISCV 1010001 rs2:5 rs1:5 001 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && gfp64($rs1); }
+
+FLE_D RISCV 1010001 rs2:5 rs1:5 000 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && gfp64($rs1); }
+
+FCLASS_D RISCV 1110001 00000 rs1:5 001 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1); }
+
+FCVT_W_D RISCV 1100001 00000 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && grm($rm); }
+
+FCVT_WU_D RISCV 1100001 00001 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && grm($rm); }
+
+FCVT_D_W RISCV 1101001 00000 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rs1) && gfp64($rd) && grm($rm); }
+
+FCVT_D_WU RISCV 1101001 00001 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rs1) && gfp64($rd) && grm($rm); }
+
+FCVT_L_D RISCV 1100001 00010 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && grm($rm); }
+
+FCVT_LU_D RISCV 1100001 00011 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1) && grm($rm); }
+
+FCVT_D_L RISCV 1101001 00010 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rs1) && gfp64($rd) && grm($rm); }
+
+FCVT_D_LU RISCV 1101001 00011 rs1:5 rm:3 rd:5 1010011 \
+!constraints { greg($rs1) && gfp64($rd) && grm($rm); }
+
+FMV_D_X RISCV 1111001 00000 rs1:5 000 rd:5 1010011 \
+!constraints { greg($rs1) && gfp64($rd); }
+
+FMV_X_D RISCV 1110001 00000 rs1:5 000 rd:5 1010011 \
+!constraints { greg($rd) && gfp64($rs1); }
