@@ -180,3 +180,93 @@ REMW RISCV 0000001 rs2:5 rs1:5 110 rd:5 0111011 \
 
 REMUW RISCV 0000001 rs2:5 rs1:5 111 rd:5 0111011 \
 !constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+@RV64A
+
+LR_W RISCV 00010 imm:2 00000 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && gbase($rs1); } \
+!memory { align(4); reg($rs1, $rd); }
+
+SC_W RISCV 00011 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOSWAP_W  RISCV 00001 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOADD_W   RISCV 00000 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOXOR_W   RISCV 00100 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOAND_W   RISCV 01100 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOOR_W    RISCV 01000 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOMIN_W   RISCV 10000 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOMAX_W   RISCV 10100 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOMINU_W  RISCV 11000 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+AMOMAXU_W  RISCV 11100 imm:2 rs2:5 rs1:5 010 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(4); reg($rs1, $rd); }
+
+LR_D       RISCV 00010 imm:2 00000 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && gbase($rs1); } \
+!memory { align(8); reg($rs1, $rd); }
+
+SC_D       RISCV 00011 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOSWAP_D  RISCV 00001 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOADD_D   RISCV 00000 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOXOR_D   RISCV 00100 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOAND_D   RISCV 01100 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOOR_D    RISCV 01000 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOMIN_D   RISCV 10000 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOMAX_D   RISCV 10100 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOMINU_D  RISCV 11000 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
+
+AMOMAXU_D  RISCV 11100 imm:2 rs2:5 rs1:5 011 rd:5 0101111 \
+!constraints { greg($rd) && greg($rs2) && gbase($rs1) && $rs2 != $rs1; }\
+!memory { align(8); reg($rs1, $rd); }
