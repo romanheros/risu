@@ -58,8 +58,15 @@ guess_arch() {
         ARCH="m68k"
     elif check_define __powerpc64__ ; then
         ARCH="ppc64"
-    elif check_define __riscv && check_define _LP64; then
-        ARCH="riscv64"
+    elif check_define __riscv ; then
+        if __riscv_xlen == 64; then
+            ARCH="riscv64"
+        elif __riscv_xlen == 32; then
+            ARCH="riscv32"
+        else
+            echo "__riscv_xlen is not supported by risu. " >&2
+            exit 1
+        fi
     else
         echo "This cpu is not supported by risu. Try -h. " >&2
         exit 1
