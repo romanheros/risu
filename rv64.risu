@@ -139,3 +139,44 @@ SRLW RISCV 0000000 rs2:5 rs1:5 101 rd:5 0011011 \
 
 SRAW RISCV 0100000 rs2:5 rs1:5 101 rd:5 0011011 \
 !constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+@RV64M
+
+MUL RISCV 0000001 rs2:5 rs1:5 000 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+MULH RISCV 0000001 rs2:5 rs1:5 001 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+MULHSU RISCV 0000001 rs2:5 rs1:5 010 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+MULHU RISCV 0000001 rs2:5 rs1:5 011 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+DIV RISCV 0000001 rs2:5 rs1:5 100 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+DIVU RISCV 0000001 rs2:5 rs1:5 101 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+REM RISCV 0000001 rs2:5 rs1:5 110 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+REMU RISCV 0000001 rs2:5 rs1:5 111 rd:5 0110011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+MULW RISCV 0000001 rs2:5 rs1:5 000 rd:5 0111011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+DIVW RISCV 0000001 rs2:5 rs1:5 100 rd:5 0111011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+DIVUW RISCV 0000001 rs2:5 rs1:5 101 rd:5 0111011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+REMW RISCV 0000001 rs2:5 rs1:5 110 rd:5 0111011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
+
+REMUW RISCV 0000001 rs2:5 rs1:5 111 rd:5 0111011 \
+!constraints { greg($rd) && greg($rs1) && greg($rs2); }
